@@ -84,7 +84,7 @@ class _Application extends State<Application> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print(message.data);
-      print('A new onMessageOpenedApp event was published!');
+      print('A new onMessageOpenedApp event was published! YEEYYY');
     });
   }
 
