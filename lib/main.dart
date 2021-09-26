@@ -1,61 +1,56 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const TabBarDemo());
+  runApp(MaterialApp(home: MyApp()));
 }
 
-class TabBarDemo extends StatelessWidget {
-  const TabBarDemo({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Color _col = Colors.red;
+  double _radis = 0;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
-              ],
-            ),
-            title: const Text('Tabs Demo'),
-          ),
-          body: TabBarView(
+    // print('BUILD METHOD');
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                children: [Text('1')],
+              AnimatedContainer(
+                curve: Curves.bounceIn,
+                duration: Duration(milliseconds: 2000),
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(_radis)),
+                  color: _col,
+                ),
               ),
-              Column(
-                children: [Text('2')],
-              ),
-              Column(
-                children: [Text('3')],
-              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    if (_col == Colors.red) {
+                      _col = Colors.blue;
+                      _radis = 15;
+                    } else {
+                      _col = Colors.red;
+                      _radis = 0;
+                    }
+                  });
+                },
+                child: Text('Animated Start'),
+              )
             ],
           ),
-          bottomNavigationBar: menu(context),
         ),
-      ),
-    );
-  }
-
-  Widget menu(context) {
-    return Container(
-      color: Theme.of(context).primaryColor,
-      child: TabBar(
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white70,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorPadding: EdgeInsets.all(5.0),
-        indicatorColor: Colors.blue,
-        tabs: [
-          Tab(icon: Icon(Icons.directions_car)),
-          Tab(icon: Icon(Icons.directions_transit)),
-          Tab(icon: Icon(Icons.directions_bike)),
-        ],
       ),
     );
   }
